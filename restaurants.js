@@ -4,7 +4,7 @@ const restaurants = [
         location: "Ranchi",
         cuisine: "North Indian, Chinese, Biryani",
         price: "₹1,000 for two",
-        image: "https://restaurant-guru.in/Moti-Mahal-Delux-Tandoori-Trail-Ranchi",
+        image: "moti-mahal-delux.jpg",
         website: "https://www.zomato.com/ranchi/moti-mahal-delux-tandoori-trail-kadru"
     },
     {
@@ -97,4 +97,54 @@ function renderRestaurants() {
     `).join('');
 }
 
+renderRestaurants();
+function renderRestaurants(filteredRestaurants = restaurants) {
+  const grid = document.getElementById('restaurantsGrid');
+  grid.innerHTML = filteredRestaurants.map(rest => `
+      <div class="restaurant-card">
+          <img src="${rest.image}" alt="${rest.name}">
+          <div class="restaurant-info">
+              <h3>${rest.name}</h3>
+              <p><strong>Location:</strong> ${rest.location}</p>
+              <p><strong>Cuisine:</strong> ${rest.cuisine}</p>
+              <p><strong>Price:</strong> ${rest.price}</p>
+              <a href="${rest.website}" target="_blank">Book / Visit</a>
+          </div>
+      </div>
+  `).join('');
+}
+
+function filterRestaurants() {
+  const search = document.getElementById('restaurantSearch').value.toLowerCase();
+  const place = document.getElementById('restaurantPlaceFilter').value;
+  const budget = document.getElementById('restaurantBudgetFilter').value;
+
+  let filtered = restaurants.filter(rest => 
+    rest.name.toLowerCase().includes(search) ||
+    rest.location.toLowerCase().includes(search) ||
+    rest.cuisine.toLowerCase().includes(search)
+  );
+
+  if (place) {
+    filtered = filtered.filter(rest => rest.location === place);
+  }
+
+  if (budget) {
+    filtered = filtered.filter(rest => {
+      const priceNum = parseInt(rest.price.replace(/[^\d]/g, '')) || 0;
+      if (budget === 'low') return priceNum < 500;
+      if (budget === 'mid') return priceNum >= 500 && priceNum <= 1000;
+      if (budget === 'high') return priceNum > 1000;
+    });
+  }
+
+  renderRestaurants(filtered);
+}
+
+// Event listeners
+document.getElementById('restaurantSearch').addEventListener('input', filterRestaurants);
+document.getElementById('restaurantPlaceFilter').addEventListener('change', filterRestaurants);
+document.getElementById('restaurantBudgetFilter').addEventListener('change', filterRestaurants);
+
+// Initial render
 renderRestaurants();
