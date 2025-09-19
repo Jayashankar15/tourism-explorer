@@ -19,11 +19,32 @@
     </nav>
 
     <section class="restaurants-container">
-        <h2>Top Restaurants in Jharkhand</h2>
-        <div class="restaurants-grid" id="restaurantsGrid">
-            <!-- JavaScript will populate this -->
-        </div>
-    </section>
+  <h2>Top Restaurants in Jharkhand</h2>
+
+  <!-- Search & Filter -->
+  <div class="filter-bar">
+    <input type="text" id="restaurantSearch" placeholder="Search restaurants...">
+
+    <select id="restaurantPlaceFilter">
+      <option value="">All Places</option>
+      <option value="Ranchi">Ranchi</option>
+      <option value="Dhanbad">Dhanbad</option>
+      <option value="Bokaro Steel City">Bokaro Steel City</option>
+    </select>
+
+    <select id="restaurantBudgetFilter">
+      <option value="">All Budgets</option>
+      <option value="low">Below ₹500</option>
+      <option value="mid">₹500 - ₹1000</option>
+      <option value="high">Above ₹1000</option>
+    </select>
+  </div>
+
+  <div class="restaurants-grid" id="restaurantsGrid">
+    <!-- JavaScript will populate this -->
+  </div>
+</section>
+
 
     <script src="restaurants.js"></script>
 </body>
