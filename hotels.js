@@ -98,3 +98,52 @@ function renderHotels() {
 }
 
 renderHotels();
+function renderHotels(filteredHotels = hotels) {
+  const grid = document.getElementById('hotelsGrid');
+  grid.innerHTML = filteredHotels.map(hotel => `
+      <div class="hotel-card">
+          <img src="${hotel.image}" alt="${hotel.name}">
+          <div class="hotel-info">
+              <h3>${hotel.name}</h3>
+              <p><strong>Location:</strong> ${hotel.location}</p>
+              <p><strong>Description:</strong> ${hotel.description}</p>
+              <p><strong>Price:</strong> ${hotel.price}</p>
+              <a href="${hotel.website}" target="_blank">Book Now</a>
+          </div>
+      </div>
+  `).join('');
+}
+
+function filterHotels() {
+  const search = document.getElementById('hotelSearch').value.toLowerCase();
+  const place = document.getElementById('hotelPlaceFilter').value;
+  const budget = document.getElementById('hotelBudgetFilter').value;
+
+  let filtered = hotels.filter(hotel => 
+    hotel.name.toLowerCase().includes(search) ||
+    hotel.location.toLowerCase().includes(search)
+  );
+
+  if (place) {
+    filtered = filtered.filter(hotel => hotel.location === place);
+  }
+
+  if (budget) {
+    filtered = filtered.filter(hotel => {
+      const priceNum = parseInt(hotel.price.replace(/[^\d]/g, '')) || 0;
+      if (budget === 'low') return priceNum < 2000;
+      if (budget === 'mid') return priceNum >= 2000 && priceNum <= 5000;
+      if (budget === 'high') return priceNum > 5000;
+    });
+  }
+
+  renderHotels(filtered);
+}
+
+// Event listeners
+document.getElementById('hotelSearch').addEventListener('input', filterHotels);
+document.getElementById('hotelPlaceFilter').addEventListener('change', filterHotels);
+document.getElementById('hotelBudgetFilter').addEventListener('change', filterHotels);
+
+// Initial render
+renderHotels();
