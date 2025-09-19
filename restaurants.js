@@ -12,7 +12,7 @@ const restaurants = [
         location: "Ranchi",
         cuisine: "Indian, Chinese, Mughlai",
         price: "₹1,000 for two",
-        image: "https://www.tripadvisor.com/Restaurant_Review-g662320-d20197909-Reviews-The_Ruin_House-Ranchi_Ranchi_District_Jharkhand.html",
+        image: "respics/res2.jpg",
         website: "https://www.zomato.com/ranchi/the-ruin-house-2-morabadi"
     },
     {
@@ -20,7 +20,7 @@ const restaurants = [
         location: "Bokaro Steel City",
         cuisine: "Fast Food, Middle Eastern",
         price: "₹400 for two",
-        image: "https://restaurant-guru.in/Al-Baik-Bokaro-Steel-City",
+        image: "respics/res3.jpg",
         website: "https://www.al-baik.com/restaurants/jharkhand/bokaro-steel-city/bokaro"
     },
     {
@@ -28,7 +28,7 @@ const restaurants = [
         location: "Ranchi",
         cuisine: "Indian, Continental",
         price: "₹550 for two",
-        image: "https://weddingz.in/ranchi/the-kavs-restaurant-harmu/",
+        image: "respics/res4.jpg",
         website: "https://www.zomato.com/ranchi/the-kavs-harmu"
     },
     {
@@ -36,7 +36,7 @@ const restaurants = [
         location: "Ranchi",
         cuisine: "South Indian, North Indian, Pizza, Street Food, Fast Food, Chinese, Desserts, Beverages",
         price: "₹500 for two",
-        image: "https://www.zomato.com/ranchi/kaveri-restaurant-church-complex",
+        image: "respics/res5.jpg",
         website: "https://www.zomato.com/ranchi/kaveri-restaurant-church-complex"
     },
     {
@@ -44,7 +44,7 @@ const restaurants = [
         location: "Ranchi",
         cuisine: "North Indian, Chinese",
         price: "₹700 for two",
-        image: "https://www.zomato.com/ranchi/seasons-restaurant-lalpur",
+        image: "respics/res6.jpg",
         website: "https://www.zomato.com/ranchi/seasons-restaurant-lalpur"
     },
     {
@@ -52,7 +52,7 @@ const restaurants = [
         location: "Ranchi",
         cuisine: "North Indian, Chinese",
         price: "₹800 for two",
-        image: "https://www.zomato.com/ranchi/soros",
+        image: "respics/res7.jpg",
         website: "https://www.zomato.com/ranchi/soros"
     },
     {
@@ -60,7 +60,7 @@ const restaurants = [
         location: "Ranchi",
         cuisine: "North Indian, Mughlai",
         price: "₹600 for two",
-        image: "https://www.tripadvisor.com/Restaurant_Review-g662320-d12345678-Reviews-Angithi_Restaurant-Ranchi_Ranchi_District_Jharkhand.html",
+        image: "respics/res8.jpg",
         website: "https://www.zomato.com/ranchi/angithi-restaurant"
     },
     {
@@ -68,7 +68,7 @@ const restaurants = [
         location: "Ranchi",
         cuisine: "Chinese, Thai, Asian",
         price: "₹700 for two",
-        image: "https://www.tripadvisor.com/Restaurant_Review-g662320-d12345679-Reviews-The_Oriental_Kitchen-Ranchi_Ranchi_District_Jharkhand.html",
+        image: "respics/res9.jpg",
         website: "https://www.zomato.com/ranchi/the-oriental-kitchen"
     },
     {
@@ -76,7 +76,7 @@ const restaurants = [
         location: "Dhanbad",
         cuisine: "Multi-Cuisine",
         price: "₹1,200 for two",
-        image: "https://www.crazymasalafood.com/top-20-biryani-restaurant-in-jharkhand/",
+        image: "respics/res10.jpg",
         website: "https://www.zomato.com/dhanbad/bahamas-fusion-kitchen"
     }
 ];
