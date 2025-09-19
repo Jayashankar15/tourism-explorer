@@ -408,3 +408,27 @@ window.JharkhandTourism = {
     getReviews,
     displayReviews
 };
+// Filter logic (works for both Hotels & Restaurants)
+document.getElementById('applyFilters').addEventListener('click', () => {
+  const place = document.getElementById('place').value;
+  const budget = document.getElementById('budget').value;
+
+  // Redirect logic (user chooses place + budget)
+  let url = '';
+
+  if (window.location.pathname.includes('restaurants.html')) {
+    url = 'restaurants.html';
+  } else if (window.location.pathname.includes('hotels.html')) {
+    url = 'hotels.html';
+  } else {
+    // Default: open hotels page for filters
+    url = 'hotels.html';
+  }
+
+  // Pass filters via query params
+  const params = new URLSearchParams();
+  if (place) params.append('place', place);
+  if (budget) params.append('budget', budget);
+
+  window.location.href = `${url}?${params.toString()}`;
+});
