@@ -18,12 +18,33 @@
         </div>
     </nav>
 
-    <section class="hotels-container">
-        <h2>Top Hotels in Jharkhand</h2>
-        <div class="hotels-grid" id="hotelsGrid">
-            <!-- JavaScript will populate this -->
-        </div>
-    </section>
+   <section class="hotels-container">
+  <h2>Top Hotels in Jharkhand</h2>
+
+  <!-- Search & Filter -->
+  <div class="filter-bar">
+    <input type="text" id="hotelSearch" placeholder="Search hotels...">
+
+    <select id="hotelPlaceFilter">
+      <option value="">All Places</option>
+      <option value="Ranchi">Ranchi</option>
+      <option value="Dhanbad">Dhanbad</option>
+      <option value="Jamshedpur">Jamshedpur</option>
+    </select>
+
+    <select id="hotelBudgetFilter">
+      <option value="">All Budgets</option>
+      <option value="low">Below ₹2000</option>
+      <option value="mid">₹2000 - ₹5000</option>
+      <option value="high">Above ₹5000</option>
+    </select>
+  </div>
+
+  <div class="hotels-grid" id="hotelsGrid">
+    <!-- JavaScript will populate this -->
+  </div>
+</section>
+
 
     <script src="hotels.js"></script>
 </body>
