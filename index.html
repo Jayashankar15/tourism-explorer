@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Jharkhand - Eco & Cultural Tourism</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-leaf"></i>
+                <span>Discover Jharkhand</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#destinations" class="nav-link">Destinations</a></li>
+                <li><a href="#plans" class="nav-link">Plans</a></li>
+                <li><a href="#book" class="nav-link">Book Now</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Explore the Heart of India</h1>
+            <p>Discover Jharkhand's pristine forests, rich culture, and vibrant traditions through sustainable tourism</p>
+            <div class="hero-buttons">
+                <button class="cta-btn primary">Plan Your Journey</button>
+                <button class="cta-btn secondary">Explore Districts</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="images/jharkhand-banner.jpg" alt="Jharkhand Landscape" />
+        </div>
+    </section>
+
+    <!-- History Section -->
+    <section class="history">
+        <div class="container">
+            <h2>Rich Heritage & Culture</h2>
+            <div class="history-content">
+                <div class="history-text">
+                    <p>Jharkhand, the "Land of Forests," is home to diverse tribal communities with centuries-old traditions. From the ancient rock paintings of Hazaribagh to the spiritual significance of Parasnath Hill, this state offers a unique blend of natural beauty and cultural richness.</p>
+                    <p>The state's tribal heritage includes vibrant festivals like Sarhul, Karam, and Sohrai, showcasing the deep connection between its people and nature. Experience authentic tribal art, dance, and music that has been preserved for generations.</p>
+                </div>
+                <div class="history-image">
+                    <img src="images/tribal-culture.jpg" alt="Tribal Culture" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Places Section -->
+    <section id="destinations" class="special-places">
+        <div class="container">
+            <h2>Featured Destinations</h2>
+            <div class="places-grid">
+                <div class="place-card">
+                    <img src="images/netarhat.jpg" alt="Netarhat" />
+                    <div class="place-info">
+                        <h3>Netarhat</h3>
+                        <p>Queen of Chotanagpur, famous for sunrise and sunset views</p>
+                        <div class="place-details">
+                            <span class="location"><i class="fas fa-map-marker-alt"></i> 23.4676°N, 84.2574°E</span>
+                            <span class="fee"><i class="fas fa-tag"></i> Free Entry</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="place-card">
+                    <img src="images/betla-national-park.jpg" alt="Betla National Park" />
+                    <div class="place-info">
+                        <h3>Betla National Park</h3>
+                        <p>Wildlife sanctuary with tigers, elephants, and diverse flora</p>
+                        <div class="place-details">
+                            <span class="location"><i class="fas fa-map-marker-alt"></i> 23.8667°N, 84.2000°E</span>
+                            <span class="fee"><i class="fas fa-tag"></i> ₹50 per person</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="place-card">
+                    <img src="images/dassam-falls.jpg" alt="Dassam Falls" />
+                    <div class="place-info">
+                        <h3>Dassam Falls</h3>
+                        <p>Spectacular waterfall cascading from 144 feet height</p>
+                        <div class="place-details">
+                            <span class="location"><i class="fas fa-map-marker-alt"></i> 23.3333°N, 85.4167°E</span>
+                            <span class="fee"><i class="fas fa-tag"></i> ₹10 per person</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="place-card">
+                    <img src="images/parasnath-hill.jpg" alt="Parasnath Hill" />
+                    <div class="place-info">
+                        <h3>Parasnath Hill</h3>
+                        <p>Highest peak in Jharkhand, sacred Jain pilgrimage site</p>
+                        <div class="place-details">
+                            <span class="location"><i class="fas fa-map-marker-alt"></i> 23.9644°N, 86.1553°E</span>
+                            <span class="fee"><i class="fas fa-tag"></i> Free Entry</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plan Your Trip Section -->
+    <section id="plans" class="plan-trip">
+        <div class="container">
+            <h2>Plan Your Perfect Trip</h2>
+            <div class="trip-form">
+                <form id="tripPlanForm">
+                    <div class="form-group">
+                        <label for="district">Select District</label>
+                        <select id="district" name="district">
+                            <option value="">Choose a district...</option>
+                            <option value="ranchi">Ranchi</option>
+                            <option value="dhanbad">Dhanbad</option>
+                            <option value="bokaro">Bokaro</option>
+                            <option value="hazaribagh">Hazaribagh</option>
+                            <option value="giridih">Giridih</option>
+                            <option value="palamu">Palamu</option>
+                            <option value="garhwa">Garhwa</option>
+                            <option value="singhbhum-west">West Singhbhum</option>
+                            <option value="singhbhum-east">East Singhbhum</option>
+                            <option value="seraikela-kharsawan">Seraikela Kharsawan</option>
+                            <option value="deoghar">Deoghar</option>
+                            <option value="dumka">Dumka</option>
+                            <option value="godda">Godda</option>
+                            <option value="sahebganj">Sahebganj</option>
+                            <option value="pakur">Pakur</option>
+                            <option value="chatra">Chatra</option>
+                            <option value="koderma">Koderma</option>
+                            <option value="gumla">Gumla</option>
+                            <option value="simdega">Simdega</option>
+                            <option value="lohardaga">Lohardaga</option>
+                            <option value="khunti">Khunti</option>
+                            <option value="ramgarh">Ramgarh</option>
+                            <option value="latehar">Latehar</option>
+                            <option value="jamtara">Jamtara</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="travelMode">Travel Mode</label>
+                        <select id="travelMode" name="travelMode">
+                            <option value="bus">Bus</option>
+                            <option value="train">Train</option>
+                            <option value="flight">Flight</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" id="startDate" name="startDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate">End Date</label>
+                            <input type="date" id="endDate" name="endDate">
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn">Find Travel Options</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eco Guidelines Section -->
+    <section class="eco-guidelines">
+        <div class="container">
+            <h2>Sustainable Tourism Guidelines</h2>
+            <div class="guidelines-grid">
+                <div class="guideline-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Respect Nature</h3>
+                    <p>Stay on designated trails, don't litter, and preserve the natural habitat</p>
+                </div>
+                <div class="guideline-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Support Local Communities</h3>
+                    <p>Buy from local artisans, stay in local accommodations, respect cultural traditions</p>
+                </div>
+                <div class="guideline-card">
+                    <i class="fas fa-recycle"></i>
+                    <h3>Minimize Waste</h3>
+                    <p>Use reusable bottles, avoid plastic, carry back your waste</p>
+                </div>
+                <div class="guideline-card">
+                    <i class="fas fa-paw"></i>
+                    <h3>Wildlife Protection</h3>
+                    <p>Maintain distance from animals, don't feed them, no flash photography</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Districts Section -->
+    <section class="districts">
+        <div class="container">
+            <h2>Explore All 24 Districts</h2>
+            <div class="districts-grid" id="districtsGrid">
+                <!-- District buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Events & Festivals Section -->
+    <section class="events-festivals">
+        <div class="container">
+            <h2>Cultural Events & Festivals</h2>
+            <div class="events-grid">
+                <div class="event-card">
+                    <div class="event-date">Mar-Apr</div>
+                    <h3>Sarhul Festival</h3>
+                    <p>Spring festival celebrating nature's bounty with traditional dances and rituals</p>
+                </div>
+                <div class="event-card">
+                    <div class="event-date">Aug-Sep</div>
+                    <h3>Karam Festival</h3>
+                    <p>Harvest festival dedicated to Karam tree, featuring folk songs and dances</p>
+                </div>
+                <div class="event-card">
+                    <div class="event-date">Nov-Dec</div>
+                    <h3>Sohrai Festival</h3>
+                    <p>Cattle worship festival with beautiful wall paintings and tribal art</p>
+                </div>
+                <div class="event-card">
+                    <div class="event-date">Jan-Feb</div>
+                    <h3>Tusu Parab</h3>
+                    <p>Winter harvest festival celebrated with colorful decorations and folk performances</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Sharing Section -->
+    <section id="book" class="user-sharing">
+        <div class="container">
+            <h2>Share Your Experience</h2>
+            <div class="sharing-content">
+                <div class="sharing-form">
+                    <form id="reviewForm">
+                        <div class="form-group">
+                            <label for="reviewName">Your Name</label>
+                            <input type="text" id="reviewName" name="reviewName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewPlace">Place Visited</label>
+                            <input type="text" id="reviewPlace" name="reviewPlace" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewRating">Rating</label>
+                            <select id="reviewRating" name="reviewRating">
+                                <option value="5">5 Stars - Excellent</option>
+                                <option value="4">4 Stars - Very Good</option>
+                                <option value="3">3 Stars - Good</option>
+                                <option value="2">2 Stars - Fair</option>
+                                <option value="1">1 Star - Poor</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewText">Your Review</label>
+                            <textarea id="reviewText" name="reviewText" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewPhoto">Upload Photo (Optional)</label>
+                            <input type="file" id="reviewPhoto" name="reviewPhoto" accept="image/*">
+                        </div>
+                        <button type="submit" class="submit-btn">Share Review</button>
+                    </form>
+                </div>
+                <div class="recent-reviews">
+                    <h3>Recent Reviews</h3>
+                    <div id="reviewsList">
+                        <div class="review-item">
+                            <div class="review-header">
+                                <strong>Priya Sharma</strong>
+                                <div class="stars">★★★★★</div>
+                            </div>
+                            <p>"Amazing experience at Netarhat! The sunrise view was breathtaking. Highly recommend staying overnight to catch both sunset and sunrise."</p>
+                            <small>Visited: Netarhat</small>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-header">
+                                <strong>Rahul Kumar</strong>
+                                <div class="stars">★★★★☆</div>
+                            </div>
+                            <p>"Betla National Park safari was incredible. Saw elephants and various birds. Could improve the road conditions though."</p>
+                            <small>Visited: Betla National Park</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Discover Jharkhand</h3>
+                    <p>Promoting sustainable eco and cultural tourism in the heart of India</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#destinations">Destinations</a></li>
+                        <li><a href="#plans">Plan Trip</a></li>
+                        <li><a href="#book">Book Now</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> info@discoverjharkhand.in</p>
+                    <p><i class="fas fa-phone"></i> +91 9876543210</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Discover Jharkhand. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- District Modal -->
+    <div id="districtModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalContent">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
