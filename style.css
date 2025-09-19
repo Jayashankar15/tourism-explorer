@@ -772,6 +772,73 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     color: rgba(255, 255, 255, 0.8);
 }
+/* Explore Section */
+.explore-section {
+  text-align: center;
+  padding: 50px 20px;
+  background: #f9f9f9;
+}
+.explore-section h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+.explore-section p {
+  color: #666;
+  margin-bottom: 20px;
+}
+.explore-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.explore-btn {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  background: #007bff;
+  color: #fff;
+  transition: background 0.3s;
+}
+.explore-btn:hover {
+  background: #0056b3;
+}
+
+/* Filter Section */
+.filter-section {
+  padding: 40px 20px;
+  background: #fff;
+  text-align: center;
+  border-top: 2px solid #eee;
+}
+.filter-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+#filterForm {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+#filterForm select, #filterForm button {
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+#applyFilters {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+#applyFilters:hover {
+  background: #1e7e34;
+}
+
 
 /* Search and Filter Styles */
 .search-filter {
