@@ -1057,3 +1057,27 @@ body {
         transform: rotate(360deg);
     }
 }
+/* Reviews - photo + delete */
+.review-photo-wrap {
+  margin: 10px 0;
+}
+.review-photo {
+  max-width: 100%;
+  border-radius: 8px;
+  display: block;
+}
+.delete-btn {
+  background: #ff4d4d;
+  border: none;
+  color: #fff;
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  float: right;
+  margin-top: 8px;
+}
+.delete-btn:hover {
+  background: #cc0000;
+}
+
