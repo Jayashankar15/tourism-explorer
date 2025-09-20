@@ -867,14 +867,257 @@ function initializeRestaurantFilters() {
 }
 
 // Add to DOMContentLoaded
-document.addEventListener('DOMContentLoaded', function() {
-    initializeApp();
-    
-    // Initialize page-specific filters
-    if (window.location.pathname.includes('hotels')) {
-        initializeHotelFilters();
-    } else if (window.location.pathname.includes('restaurants')) {
-        initializeRestaurantFilters();
+// Replace everything from line 580 onwards in your script.js with this:
+
+// Safe localStorage functions with fallback
+function loadReviewsFromStorage() {
+  try {
+    const stored = localStorage.getItem(REVIEW_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch (e) {
+    console.warn('LocalStorage not available, using memory storage');
+    return reviewsStorage || [];
+  }
+}
+
+function saveReviewsToStorage(reviews) {
+  try {
+    localStorage.setItem(REVIEW_STORAGE_KEY, JSON.stringify(reviews));
+  } catch (e) {
+    console.warn('LocalStorage not available, saving to memory');
+    reviewsStorage = reviews;
+  }
+}
+
+// Memory fallback storage
+let reviewsStorage = [];
+const REVIEW_STORAGE_KEY = 'jh_reviews_v1';
+
+// Review form setup with null checks
+function setupReviewForm() {
+  const form = document.getElementById('reviewForm');
+  if (!form) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const nameEl = document.getElementById('reviewName');
+    const placeEl = document.getElementById('reviewPlace');
+    const ratingEl = document.getElementById('reviewRating');
+    const textEl = document.getElementById('reviewText');
+    const photoEl = document.getElementById('reviewPhoto');
+
+    const name = nameEl ? nameEl.value.trim() : '';
+    const place = placeEl ? placeEl.value.trim() : '';
+    const rating = ratingEl ? parseInt(ratingEl.value) || 5 : 5;
+    const text = textEl ? textEl.value.trim() : '';
+
+    if (!name || !place || !text) {
+      alert('Please fill in your name, place visited and review text.');
+      return;
     }
+
+    const newReview = {
+      id: Date.now().toString(),
+      name,
+      place,
+      rating,
+      text,
+      date: new Date().toLocaleDateString('en-IN'),
+      photo: null
+    };
+
+    if (photoEl && photoEl.files && photoEl.files[0]) {
+      const file = photoEl.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        newReview.photo = reader.result;
+        storeReview(newReview);
+        showSuccessMessage('Thank you for sharing your experience!');
+        form.reset();
+        displayReviews();
+      };
+      reader.readAsDataURL(file);
+    } else {
+      storeReview(newReview);
+      showSuccessMessage('Thank you for sharing your experience!');
+      form.reset();
+      displayReviews();
+    }
+  });
+
+  displayReviews();
+}
+
+// Store review function
+function storeReview(review) {
+  const reviews = loadReviewsFromStorage();
+  reviews.push(review);
+  saveReviewsToStorage(reviews);
+}
+
+// Get reviews function
+function getReviews() {
+  return loadReviewsFromStorage();
+}
+
+// Display reviews function
+function displayReviews() {
+  const reviewsList = document.getElementById('reviewsList');
+  if (!reviewsList) return;
+
+  const stored = loadReviewsFromStorage();
+  const sampleReviews = [
+    {
+      id: 'sample-priya',
+      name: 'Priya Sharma',
+      place: 'Netarhat',
+      rating: 5,
+      text: 'Amazing experience at Netarhat! The sunrise view was breathtaking. Highly recommend staying overnight to catch both sunset and sunrise.',
+      date: '2024-12-15',
+      photo: null
+    },
+    {
+      id: 'sample-rahul',
+      name: 'Rahul Kumar',
+      place: 'Betla National Park',
+      rating: 4,
+      text: 'Betla National Park safari was incredible. Saw elephants and various birds. Could improve the road conditions though.',
+      date: '2024-12-10',
+      photo: null
+    }
+  ];
+
+  const all = [...stored, ...sampleReviews];
+  const toShow = all.slice(-10).reverse();
+
+  reviewsList.innerHTML = toShow.map(r => `
+    <div class="review-item">
+      <div class="review-header">
+        <strong>${escapeHtml(r.name)}</strong>
+        <div class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+      </div>
+      ${r.photo ? `<div class="review-photo-wrap"><img class="review-photo" src="${r.photo}" alt="photo by ${escapeHtml(r.name)}"></div>` : ''}
+      <p>"${escapeHtml(r.text)}"</p>
+      <small>Visited: ${escapeHtml(r.place)} • ${r.date}</small>
+      ${isStoredReview(r.id) ? `<button class="delete-btn" data-id="${r.id}">Delete</button>` : ''}
+    </div>
+  `).join('');
+
+  // Add delete event listeners
+  const deleteButtons = reviewsList.querySelectorAll('.delete-btn');
+  deleteButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const id = e.currentTarget.getAttribute('data-id');
+      let reviews = loadReviewsFromStorage();
+      reviews = reviews.filter(r => r.id !== id);
+      saveReviewsToStorage(reviews);
+      displayReviews();
+    });
+  });
+}
+
+// Helper functions
+function isStoredReview(id) {
+  const reviews = loadReviewsFromStorage();
+  return reviews.some(r => r.id === id);
+}
+
+function escapeHtml(str) {
+  return String(str || '').replace(/[&<>"'`=\/]/g, function (s) {
+    return ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+      '/': '&#x2F;',
+      '`': '&#x60;',
+      '=': '&#x3D;'
+    })[s];
+  });
+}
+
+// Export functions for compatibility
+window.JharkhandTourism = window.JharkhandTourism || {};
+window.JharkhandTourism.storeReview = storeReview;
+window.JharkhandTourism.getReviews = getReviews;
+window.JharkhandTourism.displayReviews = displayReviews;
+
+// Filter logic with proper checks - ONLY run if elements exist
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize filters only on relevant pages
+  initializePageSpecificFeatures();
 });
+
+function initializePageSpecificFeatures() {
+  const currentPath = window.location.pathname.toLowerCase();
+  
+  // Hotel page filters
+  if (currentPath.includes('hotel')) {
+    initializeHotelFilters();
+  }
+  
+  // Restaurant page filters  
+  if (currentPath.includes('restaurant')) {
+    initializeRestaurantFilters();
+  }
+  
+  // Main page filters (if applyFilters button exists)
+  const applyFiltersBtn = document.getElementById('applyFilters');
+  if (applyFiltersBtn) {
+    applyFiltersBtn.addEventListener('click', handleFilterRedirect);
+  }
+}
+
+// Filter redirect handler
+function handleFilterRedirect() {
+  const placeEl = document.getElementById('place');
+  const budgetEl = document.getElementById('budget');
+  
+  const place = placeEl ? placeEl.value : '';
+  const budget = budgetEl ? budgetEl.value : '';
+
+  let url = 'hotels.html'; // default
+  
+  // You can add logic here to determine which page to redirect to
+  const params = new URLSearchParams();
+  if (place) params.append('place', place);
+  if (budget) params.append('budget', budget);
+
+  window.location.href = `${url}?${params.toString()}`;
+}
+
+// Hotel filters initialization
+function initializeHotelFilters() {
+  const searchEl = document.getElementById('hotelSearch');
+  const placeFilterEl = document.getElementById('hotelPlaceFilter'); 
+  const budgetFilterEl = document.getElementById('hotelBudgetFilter');
+
+  if (searchEl) searchEl.addEventListener('input', filterHotels);
+  if (placeFilterEl) placeFilterEl.addEventListener('change', filterHotels);
+  if (budgetFilterEl) budgetFilterEl.addEventListener('change', filterHotels);
+}
+
+// Restaurant filters initialization  
+function initializeRestaurantFilters() {
+  const searchEl = document.getElementById('restaurantSearch');
+  const placeFilterEl = document.getElementById('restaurantPlaceFilter');
+  const budgetFilterEl = document.getElementById('restaurantBudgetFilter');
+
+  if (searchEl) searchEl.addEventListener('input', filterRestaurants);
+  if (placeFilterEl) placeFilterEl.addEventListener('change', filterRestaurants);
+  if (budgetFilterEl) budgetFilterEl.addEventListener('change', filterRestaurants);
+}
+
+// Placeholder filter functions (define these based on your hotel/restaurant filtering logic)
+function filterHotels() {
+  console.log('Hotel filtering logic would go here');
+  // This should be implemented in hotels.js
+}
+
+function filterRestaurants() {
+  console.log('Restaurant filtering logic would go here'); 
+  // This should be implemented in restaurants.js
+}
 
