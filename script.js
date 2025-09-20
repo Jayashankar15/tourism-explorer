@@ -168,6 +168,64 @@ function showDistrictModal(district) {
     modal.style.display = 'block';
 }
 
+// Live Location Map Modal
+const trackLocationBtn = document.getElementById('trackLocationBtn');
+const mapModal = document.getElementById('mapModal');
+const mapClose = mapModal.querySelector('.close');
+
+let map, marker;
+
+trackLocationBtn.addEventListener('click', () => {
+    mapModal.style.display = 'block';
+    initLiveMap();
+});
+
+mapClose.addEventListener('click', () => {
+    mapModal.style.display = 'none';
+});
+
+window.addEventListener('click', (e) => {
+    if (e.target == mapModal) {
+        mapModal.style.display = 'none';
+    }
+});
+
+// Initialize Leaflet map for live tracking
+function initLiveMap() {
+    if (!map) {
+        map = L.map('mapContainer').setView([23.6102, 85.2799], 6); // Default center
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+
+                if (!marker) {
+                    marker = L.marker([lat, lon]).addTo(map)
+                        .bindPopup('You are here').openPopup();
+                } else {
+                    marker.setLatLng([lat, lon]);
+                }
+
+                map.setView([lat, lon], 15);
+            },
+            (err) => {
+                alert('Could not get your location. Please allow location access.');
+                console.error(err);
+            },
+            { enableHighAccuracy: true }
+        );
+    } else {
+        alert('Geolocation is not supported by your browser.');
+    }
+}
+
 // Plan trip to specific district
 function planTripToDistrict(districtSlug) {
     const districtSelect = document.getElementById('district');
