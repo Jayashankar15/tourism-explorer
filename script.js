@@ -394,41 +394,26 @@ function debounce(func, wait) {
     };
 }
 
-// STEP 1: Find and remove ANY of these duplicate lines in your script.js:
-// let reviewsStorage = [];
-// const REVIEW_STORAGE_KEY = 'jh_reviews_v1';
-
-// STEP 2: Replace the entire review section with this CLEAN version:
-
 /* -----------------------------
-   Review System - Clean Version
+   Review form handling (persistent)
+   Replaces the previous in-memory review code.
    ----------------------------- */
 
-// Storage configuration
 const REVIEW_STORAGE_KEY = 'jh_reviews_v1';
-let reviewsStorage = []; // Memory fallback
 
-// Safe storage functions
+// safe loader/saver
 function loadReviewsFromStorage() {
   try {
-    const stored = localStorage.getItem(REVIEW_STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
+    return JSON.parse(localStorage.getItem(REVIEW_STORAGE_KEY)) || [];
   } catch (e) {
-    console.warn('LocalStorage not available, using memory storage');
-    return reviewsStorage;
+    return [];
   }
 }
-
 function saveReviewsToStorage(reviews) {
-  try {
-    localStorage.setItem(REVIEW_STORAGE_KEY, JSON.stringify(reviews));
-  } catch (e) {
-    console.warn('LocalStorage not available, saving to memory');
-    reviewsStorage = reviews;
-  }
+  localStorage.setItem(REVIEW_STORAGE_KEY, JSON.stringify(reviews));
 }
 
-// Review form setup
+// Called by setupForms() (which is already used in initializeApp)
 function setupReviewForm() {
   const form = document.getElementById('reviewForm');
   if (!form) return;
@@ -453,20 +438,21 @@ function setupReviewForm() {
     }
 
     const newReview = {
-      id: Date.now().toString(),
+      id: Date.now().toString(),         // unique id
       name,
       place,
       rating,
       text,
       date: new Date().toLocaleDateString('en-IN'),
-      photo: null
+      photo: null                        // will put DataURL if provided
     };
 
+    // If user uploaded an image, read it as DataURL, then store; otherwise store immediately
     if (photoEl && photoEl.files && photoEl.files[0]) {
       const file = photoEl.files[0];
       const reader = new FileReader();
       reader.onload = () => {
-        newReview.photo = reader.result;
+        newReview.photo = reader.result; // base64 dataURL
         storeReview(newReview);
         showSuccessMessage('Thank you for sharing your experience!');
         form.reset();
@@ -481,27 +467,30 @@ function setupReviewForm() {
     }
   });
 
+  // initial display when page loads
   displayReviews();
 }
 
-// Store review
+// storeReview kept for backward compatibility (and used in modal buttons if needed)
 function storeReview(review) {
   const reviews = loadReviewsFromStorage();
   reviews.push(review);
   saveReviewsToStorage(reviews);
 }
 
-// Get reviews
+// getter for export compatibility
 function getReviews() {
   return loadReviewsFromStorage();
 }
 
-// Display reviews
+// Render reviews into #reviewsList
 function displayReviews() {
   const reviewsList = document.getElementById('reviewsList');
   if (!reviewsList) return;
 
   const stored = loadReviewsFromStorage();
+
+  // sample reviews (non-persistent). If you want them removed, delete this array.
   const sampleReviews = [
     {
       id: 'sample-priya',
@@ -523,7 +512,10 @@ function displayReviews() {
     }
   ];
 
+  // Combine stored (user) reviews + sample reviews (sample reviews are shown but NOT removable)
   const all = [...stored, ...sampleReviews];
+
+  // Show newest first, and keep upto last 10 items (you can change slicing)
   const toShow = all.slice(-10).reverse();
 
   reviewsList.innerHTML = toShow.map(r => `
@@ -539,8 +531,8 @@ function displayReviews() {
     </div>
   `).join('');
 
-  const deleteButtons = reviewsList.querySelectorAll('.delete-btn');
-  deleteButtons.forEach(btn => {
+  // attach delete handlers only for stored reviews
+  Array.from(reviewsList.querySelectorAll('.delete-btn')).forEach(btn => {
     btn.addEventListener('click', (e) => {
       const id = e.currentTarget.getAttribute('data-id');
       let reviews = loadReviewsFromStorage();
@@ -551,12 +543,13 @@ function displayReviews() {
   });
 }
 
-// Helper functions
+// helper to check if an id belongs to a stored review
 function isStoredReview(id) {
   const reviews = loadReviewsFromStorage();
   return reviews.some(r => r.id === id);
 }
 
+// basic XSS escape
 function escapeHtml(str) {
   return String(str || '').replace(/[&<>"'`=\/]/g, function (s) {
     return ({
@@ -572,86 +565,44 @@ function escapeHtml(str) {
   });
 }
 
-// Export functions for compatibility
+/* Export functions used elsewhere (keeps compatibility with the rest of script.js) */
 window.JharkhandTourism = window.JharkhandTourism || {};
 window.JharkhandTourism.storeReview = storeReview;
 window.JharkhandTourism.getReviews = getReviews;
 window.JharkhandTourism.displayReviews = displayReviews;
 
-/* -----------------------------
-   Safe Filter Initialization
-   ----------------------------- */
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Only initialize filters if elements exist
-  const applyFiltersBtn = document.getElementById('applyFilters');
-  if (applyFiltersBtn) {
-    applyFiltersBtn.addEventListener('click', () => {
-      const placeEl = document.getElementById('place');
-      const budgetEl = document.getElementById('budget');
-      
-      const place = placeEl ? placeEl.value : '';
-      const budget = budgetEl ? budgetEl.value : '';
+// Export functions for district pages
+window.JharkhandTourism = {
+    districts,
+    showDistrictModal,
+    planTripToDistrict,
+    storeReview,
+    getReviews,
+    displayReviews
+};
+// Filter logic (works for both Hotels & Restaurants)
+document.getElementById('applyFilters').addEventListener('click', () => {
+  const place = document.getElementById('place').value;
+  const budget = document.getElementById('budget').value;
 
-      let url = 'hotels.html';
-      const params = new URLSearchParams();
-      if (place) params.append('place', place);
-      if (budget) params.append('budget', budget);
+  // Redirect logic (user chooses place + budget)
+  let url = '';
 
-      window.location.href = `${url}?${params.toString()}`;
-    });
+  if (window.location.pathname.includes('restaurants.html')) {
+    url = 'restaurants.html';
+  } else if (window.location.pathname.includes('hotels.html')) {
+    url = 'hotels.html';
+  } else {
+    // Default: open hotels page for filters
+    url = 'hotels.html';
   }
-});
-}
 
-// Filter redirect handler
-function handleFilterRedirect() {
-  const placeEl = document.getElementById('place');
-  const budgetEl = document.getElementById('budget');
-  
-  const place = placeEl ? placeEl.value : '';
-  const budget = budgetEl ? budgetEl.value : '';
-
-  let url = 'hotels.html'; // default
-  
-  // You can add logic here to determine which page to redirect to
+  // Pass filters via query params
   const params = new URLSearchParams();
   if (place) params.append('place', place);
   if (budget) params.append('budget', budget);
 
   window.location.href = `${url}?${params.toString()}`;
-}
-
-// Hotel filters initialization
-function initializeHotelFilters() {
-  const searchEl = document.getElementById('hotelSearch');
-  const placeFilterEl = document.getElementById('hotelPlaceFilter'); 
-  const budgetFilterEl = document.getElementById('hotelBudgetFilter');
-
-  if (searchEl) searchEl.addEventListener('input', filterHotels);
-  if (placeFilterEl) placeFilterEl.addEventListener('change', filterHotels);
-  if (budgetFilterEl) budgetFilterEl.addEventListener('change', filterHotels);
-}
-
-// Restaurant filters initialization  
-function initializeRestaurantFilters() {
-  const searchEl = document.getElementById('restaurantSearch');
-  const placeFilterEl = document.getElementById('restaurantPlaceFilter');
-  const budgetFilterEl = document.getElementById('restaurantBudgetFilter');
-
-  if (searchEl) searchEl.addEventListener('input', filterRestaurants);
-  if (placeFilterEl) placeFilterEl.addEventListener('change', filterRestaurants);
-  if (budgetFilterEl) budgetFilterEl.addEventListener('change', filterRestaurants);
-}
-
-// Placeholder filter functions (define these based on your hotel/restaurant filtering logic)
-function filterHotels() {
-  console.log('Hotel filtering logic would go here');
-  // This should be implemented in hotels.js
-}
-
-function filterRestaurants() {
-  console.log('Restaurant filtering logic would go here'); 
-  // This should be implemented in restaurants.js
-}
+});
 
